@@ -1,0 +1,60 @@
+//proto版本
+syntax = "proto2";
+
+//包声明
+package cipv_fusion_component.proto
+
+//消息声明
+message LeadDataV3 {
+    //字段格式：字段规则、数据类型、字段名、编号
+    optional float prob = 1;            // probability that car is your lead at time t
+    optional float prob_time = 2;
+    repeated float t = 3;
+
+    // x and y are relative position in device frame
+    // v absolute norm speed
+    // a is derivative of v
+    repeated float x = 4;
+    repeated float x_std = 5;
+    repeated float y = 6;
+    repeated float y_std = 7;
+    repeated float v = 8;
+    repeated float v_std = 9;
+    repeated float a = 10;
+    repeated float a_std = 11;
+}
+
+message LeadData {
+    optional float d_rel = 1;
+    optional float y_rel = 2;
+    optional float v_rel = 3;
+    optional float a_rel = 4;
+    optional float v_lead = 5;
+    optional float d_path = 6;
+    optional float v_lat = 7;
+    optional float v_lead_k = 8;
+    optional float a_lead_k = 9;
+    optional bool fcw = 10;
+    optional bool status = 11;
+    optional float a_lead_tau = 12;
+    optional float model_prob = 13;
+    optional bool radar = 14;
+}
+
+enum Error {
+    CANERROR = 0;
+    FAULT = 1;
+    WRONGCONFIG = 2;
+}
+
+// ******* radar state @ 20hz *******
+message RadarState {
+    repeated uint64 can_mono_times = 1;
+    optional uint64 md_mono_time = 2;
+    optional uint64 car_state_mono_time = 3;
+    repeated Error radar_errors = 4;
+
+    optional LeadData lead_one = 5;
+    optional LeadData lead_two = 6;
+    optional float cum_lag_ms = 7;
+}
