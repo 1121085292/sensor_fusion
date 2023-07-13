@@ -2,7 +2,7 @@
 syntax = "proto2";
 
 //包声明
-package cipv_fusion_component.proto
+package cipv_fusion_component.proto；
 
 //消息声明
 message LeadDataV3 {
